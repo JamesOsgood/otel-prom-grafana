@@ -1,0 +1,22 @@
+receivers:
+  mongodbatlas:
+    public_key: gmxaumln
+    private_key: f5b31bd6-81c4-46a4-a0b5-f15bd1d6645d
+    projects:                    # Required: List of projects to collect metrics from
+      - name:  "James Osgood Demo Project"       # Replace with valid MongoDB Atlas project ID
+
+exporters:
+  debug:
+    verbosity: detailed
+
+  otlphttp/prometheus:
+    endpoint: "http://prometheus:9090/api/v1/otlp"
+    tls:
+      insecure: true
+  
+service:
+  pipelines:
+    metrics:
+      receivers: [mongodbatlas]
+      exporters: [otlphttp/prometheus, debug]
+
