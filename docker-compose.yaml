@@ -13,6 +13,8 @@ services:
       - ./src/otel_collector/otel-collector-config.yaml:/etc/otel/config.yaml
     command:
       - "--config=/etc/otel/config.yaml"
+    profiles: [otel]
+
 
 # Prometheus
   prometheus:
@@ -37,6 +39,7 @@ services:
     restart: unless-stopped
     ports:
       - "9090:9090"
+    profiles: [prom]
 
 # Grafana
   grafana:
@@ -52,5 +55,6 @@ services:
     volumes:
       - ./src/grafana/grafana.ini:/etc/grafana/grafana.ini
       - ./src/grafana/provisioning/:/etc/grafana/provisioning/
+    profiles: [prom]
   
 
