@@ -9,14 +9,25 @@ exporters:
   debug:
     verbosity: detailed
 
-  otlphttp/prometheus:
-    endpoint: "http://prometheus:9090/api/v1/otlp"
-    tls:
-      insecure: true
+  # otlphttp/prometheus:
+  #   endpoint: "http://prometheus:9090/api/v1/otlp"
+  #   tls:
+  #     insecure: true
   
+  prometheus:
+    endpoint: "otel_collector_atlas:9091"
+    const_labels:
+        source: jco
+    send_timestamps: true
+    metric_expiration: 180m
+    enable_open_metrics: true
+    add_metric_suffixes: false
+    resource_to_telemetry_conversion:
+      enabled: true
+
 service:
   pipelines:
     metrics:
       receivers: [mongodbatlas]
-      exporters: [otlphttp/prometheus, debug]
+      exporters: [prometheus, debug]
 

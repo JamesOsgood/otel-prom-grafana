@@ -9,3 +9,4 @@ scrape_configs:
   static_configs:
   - targets:
     - 'otel_collector_atlas:8888'
+    - 'otel_collector_atlas:9091'
